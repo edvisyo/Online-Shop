@@ -1,0 +1,28 @@
+/* body {
+    background-color: #ece7e4;
+}
+
+.container {
+    background-color: #ffffff;
+    -webkit-box-shadow: 1px 6px 17px 14px rgba(255,255,255,1);
+    -moz-box-shadow: 1px 6px 17px 14px rgba(255,255,255,1);
+    box-shadow: 1px 6px 17px 14px rgba(255,255,255,1);
+} */
+
+.container-fluid {
+    width: 80%;
+}
+
+#user_menu {
+    margin-left: 15px;
+}
+
+.hidden_logout_btn {
+    display: none;
+    margin-left: 15px;
+}
+
+#new_admin_regist {
+    display: block;
+}
+
