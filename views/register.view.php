@@ -65,8 +65,8 @@ if(isset($_POST['send'])) {
                 <?php } else if(isset($success) && $success == TRUE) { ?>
                     <div class="alert alert-success" role="alert">
                     <div style="text-align: center;">
-                        <p>Registracija sekminga!</p>
-                        <p>Greit busite nukreipti i prisijungima</p>
+                        <p>Registracija sėkminga!</p>
+                        <p>Greit būsite nukreipti į prisijungimą</p>
                         </div>
                     </div>
                     <?php header("Refresh:4; url=login.view.php") ?>
@@ -75,16 +75,16 @@ if(isset($_POST['send'])) {
                     <h5 class="card-title">Registracija</h5>
                 </div>
                 <div class="input-group input-group-sm mb-3">
-                    <input type="text" name="name" class="form-control"  aria-label="Sizing example input" placeholder="Jusu Vardas" aria-describedby="inputGroup-sizing-sm">
+                    <input type="text" name="name" class="form-control"  aria-label="Sizing example input" placeholder="Jūsų Vardas" aria-describedby="inputGroup-sizing-sm" autocomplete="off">
                 </div>
                 <div class="input-group input-group-sm mb-3">
-                    <input type="text" name="lastname" class="form-control"  aria-label="Sizing example input" placeholder="Jusu Pavarde" aria-describedby="inputGroup-sizing-sm">
+                    <input type="text" name="lastname" class="form-control"  aria-label="Sizing example input" placeholder="Jūsų Pavardė" aria-describedby="inputGroup-sizing-sm" autocomplete="off">
                 </div>
                 <div class="input-group input-group-sm mb-3">
-                    <input type="email" name="email" class="form-control"  aria-label="Sizing example input" placeholder="Jusu El.Pasto adresas" aria-describedby="inputGroup-sizing-sm">
+                    <input type="email" name="email" class="form-control"  aria-label="Sizing example input" placeholder="Jūsų El.Pašto adresas" aria-describedby="inputGroup-sizing-sm" autocomplete="off">
                 </div>
                 <div class="input-group input-group-sm mb-3">
-                    <input type="password" name="password" class="form-control"  aria-label="Sizing example input" placeholder="Jusu Slaptazodis" aria-describedby="inputGroup-sizing-sm">
+                    <input type="password" name="password" class="form-control"  aria-label="Sizing example input" placeholder="Jūsų Slaptažodis" aria-describedby="inputGroup-sizing-sm" autocomplete="off">
                 </div>
                 <button type="submit" name="send" class="btn btn-outline-primary btn-sm">Registruotis</button>
                 <div>

@@ -27,6 +27,21 @@ class Register extends Database {
     }
 
 
+    public function uniqEmail() {
+
+        try {
+
+            $stmt = $this->connect()->prepare("SELECT email FROM users WHERE email= ?");
+            $stmt->execute();
+
+            return $stmt;
+
+        } catch(PDOException $e) {
+            return "ERROR:" . $e->getMessage();
+        }
+    }
+
+
 
     public function adminRegister($name = null, $password = null, $user_status_id = null) {
 

@@ -1,6 +1,6 @@
 <?php
 
-class RegisterValidation {
+class RegisterValidation extends Database {
 
     private $data,
             $errors = [];
@@ -21,7 +21,6 @@ class RegisterValidation {
 
         $this->validateName();
         $this->validateLastname();
-        //$this->validateUsername();
         $this->validateEmail();
         $this->validatePassword();
 
@@ -33,7 +32,7 @@ class RegisterValidation {
         $value = trim($this->data['name']);
 
         if(empty($value)) {
-            $this->addError('name', 'Vardas negali buti tuscias!');
+            $this->addError('name', 'Vardas negali būti tuščias!');
         } 
     }
 
@@ -42,33 +41,38 @@ class RegisterValidation {
         $value = trim($this->data['lastname']);
 
         if(empty($value)) {
-            $this->addError('lastname', 'Pavarde negali buti tuscia!');
+            $this->addError('lastname', 'Pavardė negali būti tuščia!');
         } 
     }
 
-    //private function validateUsername() {
+    private function uniqueEmail($value) {
 
-        //$value = trim($this->data['username']);
+        try {
 
-        //if(empty($value)) {
-            //$this->addError('username', 'Vartotojo vardas negali buti tuscias!');
-        //} //else {
-            //if(!preg_match('/^[a-zA-Z0-9]{6,12}$/', $value)) {
-                //$this->addError('username', 'Vartotojo vardas privalo buti 6-12 simboliu!');
-            //}
-        //}
-    //}
+            $stmt = $this->connect()->prepare("SELECT email FROM users WHERE email= '$value'");
+            $stmt->execute();
+            $row = $stmt->fetch();
+            if($row) {
+                return TRUE;
+            }
+
+        } catch(PDOException $e) {
+            return "ERROR:" . $e->getMessage();
+        }
+    }
 
     private function validateEmail() {
         $value = trim($this->data['email']);
 
         if(empty($value)) {
-            $this->addError('email', 'El.Pasto adresas negali buti tuscias!');
+            $this->addError('email', 'El.Pašto adresas negali būti tuščias!');
         } else {
             if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                $this->addError('email', 'El.Pasto adresas turi buti tikras!');
+                $this->addError('email', 'El.Pašto adresas turi būti tikras!');
             }
-        }
+        } if($this->uniqueEmail($value)) {
+            $this->addError('email', 'Toks El.Pašto adresas jau egzistuoja!');
+        } 
     }
 
     private function validatePassword() {
@@ -76,12 +80,12 @@ class RegisterValidation {
         $value = trim($this->data['password']);
 
         if(empty($value)) {
-            $this->addError('password', 'Slaptazodis negali buti tuscias!');
-        } //else {
-            //if(!preg_match('/^[a-zA-Z0-9]{6,12}$/', $value)) {
-                //$this->addError('password', 'Slaptazodis privalo buti 6-12 simboliu!');
-            //}
-        //}
+            $this->addError('password', 'Slaptažodis negali būti tuščias!');
+        } else {
+            if(!preg_match('/^[a-zA-Z0-9]{6,12}$/', $value)) {
+                $this->addError('password', 'Slaptažodis privalo būti 6-12 simbolių!');
+            }
+        }
     }
 
     private function addError($key, $value) {

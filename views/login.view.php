@@ -66,10 +66,10 @@ if(isset($_POST['login'])) {
                     <h5 class="card-title">Prisijungimas</h5>
                 </div>
                 <div class="input-group input-group-sm mb-3">
-                    <input type="email" name="email" class="form-control"  aria-label="Sizing example input" placeholder="Jusu elektroninis pastas" aria-describedby="inputGroup-sizing-sm">
+                    <input type="email" name="email" class="form-control"  aria-label="Sizing example input" placeholder="Jūsų  elektroninis paštas" aria-describedby="inputGroup-sizing-sm">
                 </div>
                 <div class="input-group input-group-sm mb-3">
-                    <input type="password" name="password" class="form-control"  aria-label="Sizing example input" placeholder="Jusu Slaptazodis" aria-describedby="inputGroup-sizing-sm">
+                    <input type="password" name="password" class="form-control"  aria-label="Sizing example input" placeholder="Jūsų slaptažodis" aria-describedby="inputGroup-sizing-sm">
                 </div>
                 <label for="checkbox">Atsiminti mane</label>
                 <input type="checkbox" id="checkbox" name="remember_me"><br>

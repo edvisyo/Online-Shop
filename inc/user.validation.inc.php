@@ -30,10 +30,10 @@ class UserValidation {
         $value = trim($this->data['email']);
 
         if(empty($value)) {
-            $this->addError('email', 'El.Pasto adresas negali buti tuscias!');
+            $this->addError('email', 'El.Pašto adresas negali būti tuščias!');
         } else {
             if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                $this->addError('email', 'El.Pasto adresas turi buti tikras!');
+                $this->addError('email', 'El.Pašto adresas turi būti tikras!');
             }
         }
     }
@@ -43,7 +43,7 @@ class UserValidation {
         $value = trim($this->data['password']);
 
         if(empty($value)) {
-            $this->addError('password', 'Slaptazodis negali buti tuscias!');
+            $this->addError('password', 'Slaptažodis negali būti tuščias!');
         } //else {
             //if(!preg_match('/^[a-zA-Z0-9]{6,12}$/', $value)) {
                 //$this->addError('password', 'Slaptazodis privalo buti 6-12 simboliu!');
