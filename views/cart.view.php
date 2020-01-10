@@ -13,12 +13,11 @@ $product = new Products();
 $product_id = array_column($_SESSION['cart'], 'product_Id');
 $quantity = array_column($_SESSION['cart'], 'product_quantity');
 
-$price = array_column($_SESSION['cart'], 'product_price');
 $total_price = array_column($_SESSION['cart'], 'total_price');
 $total = array_sum($total_price);
 
 $getProducts = $product->getProducts("SELECT * FROM products WHERE id IN (" . implode(',', $product_id) . ")");
-
+print_r($_SESSION['cart']);
 if(!empty($_SESSION['cart'])) {
     foreach($_SESSION['cart'] as $item => $value) {
         if($value['product_Id'] == $product_id) {
@@ -47,17 +46,16 @@ else if (isset($_POST['buy'])) {
         $order = new Orders();
         $insert = $order->makeOrder($user_id, $product_id, $product_name, $product_price, $product_quantity, $total_price);
 
-        
+    if($insert = TRUE) {
+        $order_success = TRUE;
+    }   else {
+           printf("Iskilo problemu vykdant jusu uzsakyma");
+           exit();
+        }
     }
 
-    // if($insert) {
-    //     $order_success  = TRUE;
-    // }   else {
-    //     printf("Iskilo problemu vykdant jusu uzsakyma");
-    //     exit();
-    // }
-
     }
+
 }
 
 
@@ -83,17 +81,16 @@ else if (isset($_POST['buy'])) {
         <h4>Jūsų prekių krepšelis</h4>
         <form action="cart.view.php" method="POST">
 
-        <?php //if(isset($order_success) && $order_success == TRUE) { ?>
-        <!-- <div class="alert alert-success" role="alert">
-            <div style="text-align: center;"> -->
-            <?php //echo "Naujas administratorius uzregistruotas sekmingai!"; ?>
-            <!-- </div>
-        </div> -->
-        <?php //} ?>
+        <?php if(isset($order_success) && $order_success == TRUE) { ?>
+        <div class="alert alert-success" role="alert">
+            <div style="text-align: center;">
+            <?php echo "Jūsų užsakymas pateiktas"; ?>
+            </div>
+        </div> 
+        <?php } ?>
             <table class="table">
             <thead class="thead-light">
                 <tr>
-                <!-- <th scope="col">id</th> -->
                 <th scope="col">Paveikslėlis</th>
                 <th scope="col">Pavadinimas</th>
                 <th scope="col">Kiekis:</th>
@@ -107,19 +104,14 @@ else if (isset($_POST['buy'])) {
             if(is_array($getProducts)) { ?>
                <?php foreach($getProducts as $products) { ?>
                 <tr>
-                <!-- <td><?php //echo $products->getId(); ?></td> -->
-                <input type="hidden" name="id" value="<?php echo $products->getId(); ?>">
                 <td><img src="../IMG/<?php echo $products->getImage(); ?>" style="width: 130px; height: 130px" class="card-img-top" alt="..."></td>
                 <td><?php echo $products->getName(); ?></td>
-                <input type="hidden" name="name" value="<?php echo $products->getName(); ?>">
-                <td><?php //echo implode(', ', $quantity); 
+                <td><?php 
                     foreach($quantity as $key => $value) {
                         echo $value;
-                    }
+                    } 
                 ?></td> 
-                <input type="hidden" name="quantity" value="<?php echo $value; ?>">
                 <td><?php echo $products->getPrice(); ?>&euro;</td>
-                <input type="hidden" name="price" value="<?php echo $products->getPrice(); ?>">
                 <td><button type="submit" name="delete" class="btn btn-danger">Pašalinti</button></td> 
                 <!-- <td><a href="cart.view.php?productID=<?php //echo $products->getId(); ?>">Pasalinti</a></td>  -->
                 <!-- <td><a href="cart.view.php?productID=<?php //echo $products->getId(); ?>"><button class="btn btn-danger">Pasalinti</button></a></td> -->
@@ -135,7 +127,6 @@ else if (isset($_POST['buy'])) {
             <div class="row justify-content-between" style="margin-top: 50px">
             <div class="totalprice">
             <h5>Pilna kaina: <?php echo $total; ?>&euro;</h5>
-            <input type="hidden" name="total_sum" value="<?php echo $total; ?>">
             </div>
             <div class="orderbtn">
             <button name="buy" class="btn btn-success">Pateikti užsakymą</button>

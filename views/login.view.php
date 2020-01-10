@@ -1,7 +1,7 @@
 <?php
-require("../inc/user.validation.inc.php");
 require("../classes/database.class.php");
 require("../classes/login.class.php");
+require("../inc/user.validation.inc.php");
 
 session_start();
 

@@ -32,4 +32,42 @@ class Login extends Database {
                     return false;
             }
     }
+
+    public function checkEmail($value) {
+
+        try {
+
+            $stmt = $this->connect()->prepare("SELECT id FROM users WHERE email= '$value'");
+            $stmt->bindParam(':email', $value);
+            $stmt->execute();
+            $rows = $stmt->fetch();
+
+            if(!$rows) {
+                return TRUE;
+            } else {
+                return false;
+            }
+        } catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function checkPassword($value) {
+
+        try {
+
+            $stmt = $this->connect()->prepare("SELECT id FROM users WHERE password= '$value'");
+            $stmt->bindParam(':password', $value);
+            $stmt->execute();
+            $rows = $stmt->fetch();
+
+            if(!$rows) {
+                return TRUE;
+            } else {
+                return false;
+            }
+        } catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
 }

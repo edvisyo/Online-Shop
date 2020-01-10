@@ -1,6 +1,6 @@
 <?php
 
-class UserValidation {
+class UserValidation extends Login {
 
     private $data,
             $errors = [];
@@ -35,6 +35,8 @@ class UserValidation {
             if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
                 $this->addError('email', 'El.Pašto adresas turi būti tikras!');
             }
+        } if($this->checkEmail($value)) {
+            $this->addError('email', 'El.Pašto adresas įvestas neteisingas');
         }
     }
 
@@ -44,11 +46,11 @@ class UserValidation {
 
         if(empty($value)) {
             $this->addError('password', 'Slaptažodis negali būti tuščias!');
-        } //else {
-            //if(!preg_match('/^[a-zA-Z0-9]{6,12}$/', $value)) {
-                //$this->addError('password', 'Slaptazodis privalo buti 6-12 simboliu!');
-            //}
-        //}
+        } else {
+            if($this->checkPassword(md5($value))) {
+                $this->addError('password', 'Slaptažodis įvestas neteisingas');
+            }
+        } 
     }
 
     private function addError($key, $value) {

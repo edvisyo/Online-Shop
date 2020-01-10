@@ -27,14 +27,16 @@ class Register extends Database {
     }
 
 
-    public function uniqEmail() {
+    public function notUniqueEmail($value) {
 
         try {
 
-            $stmt = $this->connect()->prepare("SELECT email FROM users WHERE email= ?");
+            $stmt = $this->connect()->prepare("SELECT email FROM users WHERE email= '$value'");
             $stmt->execute();
-
-            return $stmt;
+            $row = $stmt->fetch();
+            if($row) {
+                return TRUE;
+            }
 
         } catch(PDOException $e) {
             return "ERROR:" . $e->getMessage();

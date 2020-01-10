@@ -1,6 +1,6 @@
 <?php
 
-class RegisterValidation extends Database {
+class RegisterValidation extends Register {
 
     private $data,
             $errors = [];
@@ -45,22 +45,6 @@ class RegisterValidation extends Database {
         } 
     }
 
-    private function uniqueEmail($value) {
-
-        try {
-
-            $stmt = $this->connect()->prepare("SELECT email FROM users WHERE email= '$value'");
-            $stmt->execute();
-            $row = $stmt->fetch();
-            if($row) {
-                return TRUE;
-            }
-
-        } catch(PDOException $e) {
-            return "ERROR:" . $e->getMessage();
-        }
-    }
-
     private function validateEmail() {
         $value = trim($this->data['email']);
 
@@ -70,7 +54,7 @@ class RegisterValidation extends Database {
             if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
                 $this->addError('email', 'El.Pašto adresas turi būti tikras!');
             }
-        } if($this->uniqueEmail($value)) {
+        } if($this->notUniqueEmail($value)) {
             $this->addError('email', 'Toks El.Pašto adresas jau egzistuoja!');
         } 
     }
