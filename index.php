@@ -106,7 +106,7 @@ $getAllProducts = $db->getProducts("SELECT * FROM products");
     </div>
 
     </main>
-    <?php include "inc/footer.php"; ?>
+    <?php //include "inc/footer.php"; ?>
     
 
 <?php } else { ?>

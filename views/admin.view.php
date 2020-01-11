@@ -47,6 +47,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['status'])) {
     <li><a href="addnewadmin.php" id="new_admin">Naujo administratoriaus registracija</a></li>
     <li><a href="addnewproduct.php">Naujo produkto įkėlimas</a></li>
     <li><a href="addnewcategory.php">Naujos prekės kategorijos sukūrimas</a></li>
+    <li><a href="editproducts.php">Redaguoti esamu prekiu sarasa</a></li>
     <li><a href="orderlist.php">Užsakymų peržiūrėjimas</a></li>
     </ul>
         

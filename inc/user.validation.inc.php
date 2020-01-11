@@ -37,7 +37,7 @@ class UserValidation extends Login {
             }
         } if($this->checkEmail($value)) {
             $this->addError('email', 'El.Pašto adresas įvestas neteisingas');
-        }
+        } 
     }
 
     private function validatePassword() {

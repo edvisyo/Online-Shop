@@ -80,4 +80,38 @@ class Products extends Database {
         }
     }
 
+
+    public function deleteProduct($id) {
+
+        try {
+
+        $stmt = $this->connect()->prepare("DELETE FROM products WHERE id= '$id'"); 
+        $stmt->execute();
+        
+        return $stmt;
+
+        } catch(PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+
+    public function editProduct($id, $name, $description, $price) {
+
+        try {
+
+        $stmt = $this->connect()->prepare("UPDATE  products SET name= '$name', description= '$description', price= '$price' WHERE id= '$id'"); 
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':price', $price);
+        $stmt->execute();
+        
+        return $stmt;
+
+        } catch(PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+
 }
