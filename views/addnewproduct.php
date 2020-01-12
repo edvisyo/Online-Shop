@@ -1,4 +1,5 @@
 <?php
+ob_start(); 
 include"../inc/navigation.inc.php";
 require("../classes/database.class.php");
 require("../classes/products.class.php");
@@ -31,7 +32,7 @@ if(isset($_POST['add_product'])) {
             if($fileSize < 1000000) {
                 $fileDestination = '../IMG/'. $fileName;
                 move_uploaded_file($fileTmpName, $fileDestination);
-                header("Location: ../views/addnewproduct.php?nuotrauka_ikelta");
+                //header("Location: ../views/addnewproduct.php?nuotrauka_ikelta");
             } else {
                 echo "Failo dydis per didelis!";
             }
@@ -44,10 +45,10 @@ if(isset($_POST['add_product'])) {
 
     $result = $add_new_product->productRegister($name, $description, $price, $image, $product_category_id);
 
-    if($result) {
-        $registered == TRUE;
+    if($result = TRUE) {
+        $registered = TRUE;
     } else {
-        printf("REGISTER ERROR");
+        printf("PRODUCT REGISTER ERROR");
             exit();
     }
 
@@ -73,10 +74,9 @@ $getCategoriesList = $db->getCategory("SELECT * FROM product_category");
         <?php if(isset($registered) && $registered == TRUE) { ?>
             <div class="alert alert-success" role="alert">
                 <div style="text-align: center;">
-                <?php echo "Naujas administratorius uzregistruotas sekmingai!"; ?>
+                <?php echo "Naujas produktas įkeltas sėkmingai!"; ?>
                 </div>
             </div>
-            <?php //header('Refresh:3; url=admin.view.php');?>
         <?php } ?>
         Pavadinimas: <input type="text" name="name" class="form-control" autocomplete="off">
         <br>
@@ -88,16 +88,6 @@ $getCategoriesList = $db->getCategory("SELECT * FROM product_category");
         Kaina: <input type="text" name="price" class="form-control">
         <br>
         Nuotrauka: <input type="file" name="image" class="btn btn-default"> 
-        <!-- Image: 
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-            </div>
-        <div class="custom-file">
-            <input type="file" name="image" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-            <label class="custom-file-label" for="inputGroupFile01"><?php  ?></label>
-            </div>
-        </div> -->
         <br>
         Produkto kategorija: 
             <div class="input-group mb-3">
@@ -113,6 +103,6 @@ $getCategoriesList = $db->getCategory("SELECT * FROM product_category");
         <button type="submit" name="add_product" class="btn btn-primary">Įkelti</button>
     </form>
     </div>
-    <?php //} ?>
+    <?php ob_end_flush(); ?>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-
+ob_start();
 include_once "../inc/navigation.inc.php";
 require("../classes/database.class.php");
 require("../classes/products.class.php");
@@ -17,10 +17,9 @@ if(isset($_POST['confirm_edit'])) {
 
     $result = $edit->editProduct($id, $name, $description, $price);
     if($result) {
-        echo '<script>alert("Prekes duomenys redaguoti sekmingai")</script>';
-        //echo '<script>window.location = editproducts.php</script>';
-        //header("Location: edit_product_info.php");
-    }
+        $_SESSION['message'] = "Prekės duomenys redaguoti sėkmingai";
+        header("Location: ../views/editproducts.php");
+    } 
 
 }
 ?>
@@ -34,20 +33,21 @@ if(isset($_POST['confirm_edit'])) {
 </head>
 <body>
     <div class="container">
+    <a href="editproducts.php">Atgal</a>
         <h5>Edit page</h5>
         <form action="edit_product_info.php" method="POST">
         <?php if($choosed) { ?>
         <?php foreach($choosed as $editprod) {?>
         <input type="hidden" name="hidden_id" value="<?php echo $editprod->getId(); ?>">
         Pavadinimas: <input type="text" name="name" class="form-control" value="<?php echo $editprod->getName(); ?>">
-        Aprasymas: <input type="text" name="description" class="form-control" value="<?php echo $editprod->getDescription(); ?>">
-        Kaina: <input type="text" name="price" class="form-control" value="<?php echo $editprod->getPrice(); ?>">
+        Aprasymas: <textarea class="form-control" name="description" aria-label="With textarea"><?php echo $editprod->getDescription(); ?></textarea>
+        Kaina: <input type="text" name="price" class="form-control" value="<?php echo $editprod->getPrice(); ?>&euro;">
         <hr>
         <button type="submit" name="confirm_edit" class="btn btn-success">Patvirtinti pakeitimus</button>
         </form>
         <?php } ?>
         <?php } ?>
-
+<?php ob_end_flush(); ?>
     </div>
 </body>
 </html>

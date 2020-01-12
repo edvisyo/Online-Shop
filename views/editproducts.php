@@ -13,9 +13,12 @@ if(isset($_GET['delete_id'])) {
     $result = $prod->deleteProduct($id);
 
     if($result) {
+        echo '<script>alert("Produktas pašalintas")</script>';
         header("Refresh:0.1; url=editproducts.php");
-    }
+    } 
+    
 } 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,15 +31,21 @@ if(isset($_GET['delete_id'])) {
 <body>
     <div class="container">
     <a href="admin.view.php">Atgal</a>
-    <h3>Prekiu redagavimo puslapis</h3>
+    <h3>Prekių redagavimo puslapis</h3>
+        <?php if(!empty($_SESSION['message'])) { ?>
+        <div class="alert alert-success" role="alert" style="text-align: center">
+            <?php echo $_SESSION['message']; ?>
+        </div>
+            <?php unset($_SESSION['message']); ?>
+        <?php } ?>
             <table class="table">
         <thead>
             <tr>
-            <th scope="col">Paveikselis</th>
+            <th scope="col">Paveiksėlis</th>
             <th scope="col">Pavadinimas</th>
-            <th scope="col">Aprasymas</th>
-            <th scope="col">Redaguoti informacija</th>
-            <th scope="col">Pasalinti produkta</th>
+            <th scope="col">Aprašymas</th>
+            <th scope="col">Redaguoti informaciją</th>
+            <th scope="col">Pašalinti produktą</th>
             </tr>
         </thead>
         <tbody>
@@ -46,8 +55,8 @@ if(isset($_GET['delete_id'])) {
             <td><img src="../IMG/<?php echo $products->getImage(); ?>" width="120" height="120"></td>
             <td><?php echo $products->getName(); ?></td>
             <td><?php echo $products->getDescription(); ?></td>
-            <td><a href="edit_product_info.php?edit_id=<?php echo $products->getId(); ?>" class="btn btn-warning">Redaguoti produkta</a></td>
-            <td><a href="editproducts.php?delete_id=<?php echo $products->getId(); ?>" class="btn btn-danger">Istrinti produkta</a></td>
+            <td><a href="edit_product_info.php?edit_id=<?php echo $products->getId(); ?>" class="btn btn-warning">Redaguoti produktą</a></td>
+            <td><a href="editproducts.php?delete_id=<?php echo $products->getId(); ?>" class="btn btn-danger">Ištrinti produktą</a></td>
             </tr>
             <?php } ?>
         <?php } ?>
