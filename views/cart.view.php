@@ -17,30 +17,29 @@ $total_price = array_column($_SESSION['cart'], 'total_price');
 $total = array_sum($total_price);
 
 $getProducts = $product->getProducts("SELECT * FROM products WHERE id IN (" . implode(',', $product_id) . ")");
-print_r($_SESSION['cart']);
-if(!empty($_SESSION['cart'])) {
-    foreach($_SESSION['cart'] as $item => $value) {
-        if($value['product_Id'] == $product_id) {
+//print_r($_SESSION['cart']);
+// if(!empty($_SESSION['cart'])) {
+//     foreach($_SESSION['cart'] as $item => $value) {
+//         if($value['product_Id'] == $product_id) {
+//             unset($_SESSION["cart"][$item]);
+//         }
+//     } 
+// }
+
+// if(isset($_POST['delete'])) {
+//     unset($_SESSION["cart"][$item]);
+//     header("Location: cart.view.php");
+// } 
+
+
+if(isset($_GET['productID'])) {
+    $id = $_GET['productID'];
+        foreach($_SESSION['cart'] as $item => $value) {
+            if($value['product_Id'] == $id) {
             unset($_SESSION["cart"][$item]);
         }
-    } 
+    }
 }
-
-if(isset($_POST['delete'])) {
-    unset($_SESSION["cart"][$item]);
-    header("Location: cart.view.php");
-} 
-// if(!empty($_SESSION['cart'])) {
-// if(isset($_GET['productID'])) {
-//     $id = $_GET['productID'];
-//     foreach($_SESSION['cart'] as $item => $value) {
-//         if($value['product_Id'] == $id) {
-//         unset($_SESSION["cart"][$item]);
-//     //unset($_SESSION['cart'], $id);
-//         }
-//     }
-// }
-// }
 else if (isset($_POST['buy'])) {
     if(isset($_SESSION['cart'])) {
 
@@ -62,7 +61,7 @@ else if (isset($_POST['buy'])) {
     }   else {
            printf("Iskilo problemu vykdant jusu uzsakyma");
            exit();
-        }
+        } 
     }
 
     }
@@ -123,9 +122,9 @@ else if (isset($_POST['buy'])) {
                     } 
                 ?></td> 
                 <td><?php echo $products->getPrice(); ?>&euro;</td>
-                <td><button type="submit" name="delete" class="btn btn-danger">Pašalinti</button></td> 
-                <!-- <td><a href="cart.view.php?productID=<?php //echo $products->getId(); ?>">Pasalinti</a></td>   -->
-                <!-- <td><a href="cart.view.php?productID=<?php //echo $products->getId(); ?>"><button class="btn btn-danger">Pasalinti</button></a></td> -->
+                <!-- <td><button type="submit" name="delete" class="btn btn-danger">Pašalinti</button></td>  -->
+                <!-- <td><a href="cart.view.php?productID=<?php //echo $products->getId(); ?>">Pašalinti</a></td> -->
+                <td><a href="cart.view.php?productID=<?php echo $products->getId(); ?>" class="btn btn-danger">Pašalinti</a></td> 
                 </tr>
                 <?php } ?>
             <?php } else { ?>
