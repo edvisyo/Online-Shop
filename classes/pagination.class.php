@@ -1,65 +1,47 @@
-<?php
+<?php 
 
-// class Pagination extends Products {
-
-// }
 
 class Pagination extends Database {
 
-    public function records() {
+    private $table,
+            $total_records,
+            $limit = 6;
 
-        try {
 
-            $stmt = $this->connect()->prepare("SELECT * FROM products");
-            $stmt->rowCount();
-            $stmt->execute();
-            $counts = $stmt->rowCount();
-                //if($counts > 0) {
-                    //echo "Total .$counts";
-                //} else {
-                    //echo "Nothing is count";
-                //}
+    public function __construct($table) {
+        $this->table = $table;
+        $this->set_total_records();
+    }        
+           
+    
+    public function set_total_records() {
 
-            $page_rows = 6;
-            $last_page = ceil($counts/$page_rows);
-            
-            echo $last_page;
+        $query = "SELECT id FROM products";
+        $stmt = $this->connect()->prepare($query);
+        $stmt->execute();
+        $this->total_records = $stmt->rowCount();
+    }
 
-            if($last_page < 1) {
-                $last_page = 1;
-            }
 
-            if(isset($_GET['page'])) {
-                $page_num = preg_replace('#[^0-9]#', '', $_GET['page']);
-                echo $page_num;
-            }
+    public function getData() {
 
-            $page_num = 10;
-
-            if($page_num < 1) {
-                $page_num = 1;
-            } else if($page_num > $last_page) {
-                $page_num = $last_page;
-            }
-
-            $begin_limit = ($page_num - 1)*$page_rows;
-            $end_limit = $page_rows;
-
-            $query = $this->connect()->prepare("SELECT * FROM products ORDER BY id DESC LIMIT :begin, :end");
-            $query->bindValue(':begin', (int)$begin_limit, PDO::PARAM_INT);
-            $query->bindValue(':end', (int)$end_limit, PDO::PARAM_INT);
-            $query->execute();
-            while($res = $query->fetch(PDO::FETCH_ASSOC));
-                $all = $res['id'];
-                echo $all;
-
-        } catch(PDOException $e) {
-            return "ERROR:" . $e->getMessage();
-        }        
-
+        $start = 0;
+        if($this->currentPage() > 1) {
+            $start = ($this->currentPage() * $this->limit) - $this->limit;
+        }
+        $query = "SELECT * FROM $this->table LIMIT $start, $this->limit";
+        $stmt = $this->connect()->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+    
+    
+    public function currentPage() {
+        return isset($_GET['page']) ? (int)$_GET['page'] :1;
+    }
+    
+    
+    public function getPageNumbers() {
+        return ceil($this->total_records / $this->limit);
     }
 }
-
-
-
-     

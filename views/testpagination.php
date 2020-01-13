@@ -1,8 +1,8 @@
 <?php
-//include_once "../classes/database.class.php";
+include_once "../classes/database.class.php";
 // require("../classes/products.class.php");
 // require("../classes/getproducts.class.php");
-require("../classes/pagination.test.class.php");
+require("../classes/pagination.class.php");
 
 //require_once 'class/Pagination.php';
 	//$pagination =  new Pagination('products');
@@ -10,18 +10,13 @@ require("../classes/pagination.test.class.php");
 	//$pages	= $pagination->get_pagination_numbers();
 
 $pagination = new Pagination('products');
-$all = $pagination->get_data();
+$all = $pagination->getData();
 //$pagination->set_total();
 //echo $pagination;
 //var_dump($all);
-$pages  = $pagination->get_pagination_numbers();
+$pages  = $pagination->getPageNumbers();
 //echo $pages;
 
-// if(!isset($_GET['page'])) {
-//     $page = 1;
-// }   else {
-//     $page = $_GET['page'];
-// }
 
 ?>
 
@@ -42,9 +37,9 @@ $pages  = $pagination->get_pagination_numbers();
 <?php } ?>
 <br>
 <?php for($page=1; $page <= $pages; $page++) { ?>
-    <?php if($pagination->is_showable($page)) { ?>
+    <?php //if($pagination->is_showable($page)) { ?>
         <a href="testpagination.php?page=<?php echo $page;?>"><?php echo $page; ?></a> 
-    <?php } ?>
+    <?php //} ?>
 <?php } ?>
 
 <!-- <ul class="pagination justify-content-center">
