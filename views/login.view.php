@@ -1,13 +1,13 @@
 <?php
-require("../classes/database.class.php");
-require("../classes/login.class.php");
-require("../inc/user.validation.inc.php");
+//require("classes/database.class.php");
+require("classes/login.class.php");
+require("inc/user.validation.inc.php");
 
-session_start();
+//session_start();
 
-if(isset($_SESSION['username']) || isset($_COOKIE['username'])) {
-    header("Location: ../index.php");
-}
+// if(isset($_SESSION['username']) || isset($_COOKIE['username'])) {
+//     header("Location: index.php");
+// }
 
 if(isset($_POST['login'])) {
 
@@ -47,14 +47,18 @@ if(isset($_POST['login'])) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- My CSS -->
-    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="CSS/style.css">
     <title>LogIn</title>
 </head>
 <body>
     <div class="row justify-content-center" style="margin-top: 55px">
-        <form action="login.view.php" method="POST">
+    <div class="loginForm" id="loginForm">
+        <form action="index.php" method="POST">
         <div class="card" style="width: 24rem;">
         <div class="card-body">
+            <button type="button" id="close_login_form" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
                 <?php if(isset($errors) && count($errors) > 0) {
                 foreach($errors as $error) { ?>
                     <div class="alert alert-danger" role="alert">
@@ -73,12 +77,13 @@ if(isset($_POST['login'])) {
                 </div>
                 <label for="checkbox">Atsiminti mane</label>
                 <input type="checkbox" id="checkbox" name="remember_me"><br>
-                <button type="submit" name="login" style="margin-top: 8px; margin-bottom: 5px" class="btn btn-outline-primary btn-sm">Prisijungti</button>
+                <button type="submit" id="loginBtn" name="login" style="margin-top: 8px; margin-bottom: 5px" class="btn btn-outline-primary btn-sm">Prisijungti</button>
                 <div>
-                <p>Dar ne narys?<a href="register.view.php">Registruotis</a></p>
         </div>
         </div>
         </form> 
+        </div>
     </div>
+    
 </body>
 </html>

@@ -1,17 +1,28 @@
 <?php
 include_once "classes/database.class.php";
-require("classes/products.class.php");
-require("classes/getproducts.class.php");
+//require("classes/products.class.php");
+//require("classes/getproducts.class.php");
+require("classes/pagination.class.php");
+
+$pagination = new Pagination('products');
+$allProducts = $pagination->getData();
+$pages = $pagination->getPageNumbers();
 
 session_start();
 
-if(isset($_SESSION['username']) || isset($_COOKIE['username'])) {
+//if(isset($_SESSION['username']) || isset($_COOKIE['username'])) {
+    if(isset($_SESSION['username'])) {
+        // echo '<script type="text/javascript">
+        // ($document).load(function() {
+        //    var bt = document.getElementById("btns");
+        //    bt.setAttribute("class", "hide_login_register_btns");
+        // });
+        // </script>';
+        include 'inc/navigation1.php';
+    } else {
+        include 'inc/navigation2.php';
+    }
     
-
-$db = new Products();
-$getAllProducts = $db->getProducts("SELECT * FROM products");  
-
-
 ?>
 
 <!DOCTYPE html>
@@ -30,90 +41,59 @@ $getAllProducts = $db->getProducts("SELECT * FROM products");
     <title>ShoppingPage</title>
 </head>
 <body>
-    <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid" style="width: 80%">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-            <!-- <a href="views/login.view.php">Prisijungimas</a>
-            <a href="views/register.view.php">Registracija</a> -->
-            <a href="views/cart.view.php"><i class="fas fa-shopping-cart fa-lg" style="margin-left: 15px"></i></a>
-            <?php 
-                if(isset($_SESSION['cart'])) {
-                    $count = count($_SESSION['cart']);
-                    echo "<span>$count</span>";
-                } else {
-                    echo "<span>0</span>";
-                }
-            ?>
-            <a href="#" id="user_menu"><h6 style="color: black"><?php echo($_SESSION['username']); ?></h6></a>
-            <div class="hidden_logout_btn" id="hidden_logout_btn">
-            <a href="inc/logout.php">Atsijungti</a>
-            </div>
-            </form>
-        </div>
-        </div>
-        </nav>
-    </header>  
-    <main>         
+     
+    <main>   
+                <!-- Hidden Login Form  -->
+                <?php include "views/login.view.php"; ?>
+                <!-- End Login Form -->
+                <!-- Hidden Register From -->
+                <?php include "views/register.view.php"; ?>
+                <!-- End Register Form -->
     <div class="container">
         <div class="row justify-content-between">
-    <?php if($getAllProducts) { ?>
-    <?php foreach($getAllProducts as $product) { ?>
+    <?php if($allProducts) { ?>
+    <?php foreach($allProducts as $product) { ?>
 
-        <div class="" style="width: 18rem; margin-top: 70px; margin-bottom: 40px">
-            <img src="IMG/<?php echo $product->getImage(); ?>" class="card-img-top" height="300" width="300" alt="...">
+        <div class="" style="width: 18rem; margin-top: 0px; margin-bottom: 70px">
+            <img src="IMG/<?php echo $product->image; ?>" class="card-img-top" height="300" width="300" alt="...">
             <div class="card-body">
-                <h5 class="card-title"><?php echo $product->getName(); ?></h5>
+                <h5 class="card-title"><?php echo $product->name; ?></h5>
                 
-                <p><?php echo $product->getPrice(); ?>&euro;</p>
-                <a href="views/product.view.php?product_id=<?php echo $product->getId(); ?>" class="btn btn-primary">Plačiau</a>
+                <p><?php echo $product->price; ?>&euro;</p>
+                <a href="views/product.view.php?product_id=<?php echo $product->id; ?>" class="btn btn-primary">Plačiau</a>
             </div>
         </div>
             
-   <?php } ?>
-<?php } ?>
-    </div>
+    <?php } ?>
+    <?php } ?>
     </div>
 
+        <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+            <a class="page-link" href="index.php?page=1" tabindex="-1" aria-disabled="true">First</a>
+            </li>
+            <?php for($page = 1; $page <= $pages; $page++) { ?>
+            <li class="page-item"><a class="page-link" href="index.php?page=<?php echo $page; ?>"><?php echo $page; ?></a></li>
+            <?php } ?>
+            <li class="page-item">
+            <a class="page-link" href="index.php?page=3">Last</a>
+            </li>
+        </ul>
+        </nav>
+
+    </div>
     </main>
     <?php //include "inc/footer.php"; ?>
     
 
-<?php } else { ?>
+<?php //} else { ?>
      
-    <?php echo '<script>alert("Neteisingai ivesti duomenys")</script>'; ?>
-    <?php header("Refresh:0.1; url=views/login.view.php"); ?>
-<?php } ?>
+    <?php //echo '<script>alert("Neteisingai ivesti duomenys")</script>'; ?>
+    <?php //header("Refresh:0.1; url=views/login.view.php"); ?>
+    <?php //header("Refresh:0.1; url=index.php"); ?>
+    <?php //header("Refresh:0.1; url=views/register.view.php"); ?>
+<?php //} ?>
 
 <!-- jQuery Script CDN -->
 <script
@@ -125,6 +105,6 @@ $getAllProducts = $db->getProducts("SELECT * FROM products");
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <!-- My Script -->
-<script src="Script/myscript.js"></script>
+<script src="Script/myscript.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

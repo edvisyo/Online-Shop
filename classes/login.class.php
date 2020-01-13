@@ -15,13 +15,13 @@ class Login extends Database {
                         session_start();
                         $_SESSION['username'] = $row['name'];
                         $_SESSION['status'] = $row['user_status_id'];
-                        header("Location: admin.view.php");
+                        header("Location: views/admin.view.php");
                     } 
                     else if($row['user_status_id'] == 2) {
                         session_start();
                         $_SESSION['username'] = $row['email'];
                         $_SESSION['userId'] = $row['id'];
-                        header("Location: ../index.php");
+                        header("Location: index.php");
                     }
         } 
             return true;

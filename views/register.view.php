@@ -1,8 +1,8 @@
 <?php
 
-include_once "../classes/database.class.php";
-include_once "../classes/register.class.php";
-require("../inc/register.validation.inc.php");
+//include_once "../classes/database.class.php";
+include_once "classes/register.class.php";
+require("inc/register.validation.inc.php");
 
 // session_start();
 
@@ -53,9 +53,13 @@ if(isset($_POST['send'])) {
 <body>
 
     <div class="row justify-content-center" style="margin-top: 55px">
-        <form action="register.view.php" method="POST">
+    <div class="registerForm" id="registerForm">
+        <form action="index.php" method="POST">
         <div class="card" style="width: 24rem;">
         <div class="card-body">
+            <button type="button" id="close_register_form" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
                 <?php if(isset($errors) && count($errors) > 0) {
                 foreach($errors as $error) { ?>
                     <div class="alert alert-danger" role="alert">
@@ -91,6 +95,7 @@ if(isset($_POST['send'])) {
         </div>
         </div>
         </form> 
+    </div>
     </div>
 
 </body>

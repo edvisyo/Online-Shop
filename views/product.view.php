@@ -105,7 +105,7 @@ if(isset($_POST['add_to_cart'])) {
                     echo "<span>0</span>";
                 }
             ?>
-            <a href="#" id="user_menu"><h6 style="color: black"><?php echo($_SESSION['username']); ?></h6></a>
+            <a href="#" id="user_menu"><h6 style="color: black"><?php if(isset($_SESSION['username'])) { echo($_SESSION['username']); }?></h6></a>
             <div class="hidden_logout_btn" id="hidden_logout_btn">
             <a href="../inc/logout.php">Atsijungti</a>
             </div>

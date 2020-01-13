@@ -9,6 +9,20 @@
     box-shadow: 1px 6px 17px 14px rgba(255,255,255,1);
 } */
 
+.loginForm {
+    position: absolute;
+    display: none;
+}
+
+.registerForm {
+    position: absolute;
+    display: none;
+}
+
+.hide_login_register_btns {
+    display: none;
+}
+
 .container-fluid {
     width: 80%;
 }
