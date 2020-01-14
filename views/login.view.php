@@ -57,7 +57,7 @@ if(isset($_POST['login'])) {
         <div class="card" style="width: 24rem;">
         <div class="card-body">
             <button type="button" id="close_login_form" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true" style="color: black">&times;</span>
             </button>
                 <?php if(isset($errors) && count($errors) > 0) {
                 foreach($errors as $error) { ?>

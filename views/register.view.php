@@ -52,13 +52,13 @@ if(isset($_POST['send'])) {
 </head>
 <body>
 
-    <div class="row justify-content-center" style="margin-top: 55px">
+    <div class="row justify-content-center" style="margin-top: 0px">
     <div class="registerForm" id="registerForm">
         <form action="index.php" method="POST">
         <div class="card" style="width: 24rem;">
         <div class="card-body">
             <button type="button" id="close_register_form" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true" style="color: black">&times;</span>
             </button>
                 <?php if(isset($errors) && count($errors) > 0) {
                 foreach($errors as $error) { ?>

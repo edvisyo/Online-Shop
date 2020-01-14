@@ -82,8 +82,8 @@ else if (isset($_POST['buy'])) {
     <!-- Fonts -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <!-- My CSS -->
-    <link rel="stylesheet" href="../CSS/style.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="../CSS/style.css?v=<?php echo time(); ?>">
+    <title>Shopping Page</title>
 </head>
 <body>
 
@@ -168,6 +168,7 @@ else if (isset($_POST['buy'])) {
         </table>
     </div> 
     <?php } ?>
+    <?php include "../inc/footer.php"; ?>
     <?php ob_end_flush(); ?>
 </body>
 </html>
