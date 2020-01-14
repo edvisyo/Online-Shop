@@ -2,10 +2,13 @@
 require("../classes/database.class.php");
 require("../classes/products.class.php");
 require("../classes/getproducts.class.php");
+require("../classes/getcategories.class.php");
 //include "../inc/navigation.inc.php";
 session_start();
 
 $product = new Products();
+
+$getAllCategories = $product->getCategory("SELECT * FROM product_category");
 
 $id = $_GET['product_id'];
 $getProductId = $product->getProducts("SELECT * FROM products WHERE id= '$id'");
@@ -64,7 +67,7 @@ if(isset($_POST['add_to_cart'])) {
     <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid" style="width: 80%">
-        <a class="navbar-brand" href="#" style="color: #ffffff; font-family: 'Kaushan Script', cursive;">Online Store</a>
+        <a class="navbar-brand" href="../index.php" style="color: #ffffff; font-family: 'Kaushan Script', cursive;">Online Store</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -72,20 +75,21 @@ if(isset($_POST['add_to_cart'])) {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="../index.php">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="../index.php">Pagrindinis <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
-            </li>
+            </li> -->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
+                Ieškoti pagal kategoriją
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
+                <?php if($getAllCategories) { ?>
+                    <?php foreach($getAllCategories as $category) { ?>
+                        <a class="dropdown-item" href="product_by_category.php?category_id=<?php echo $category->getId(); ?>"><?php echo $category->getCategoryName(); ?></a>
+                    <?php } ?>
+                <?php } ?>
                 </div>
             </li>
             </ul>
@@ -99,26 +103,29 @@ if(isset($_POST['add_to_cart'])) {
             </div>
             <?php } else { ?>
             <?php if(isset($_SESSION['username'])) { ?>
-            <a href="../views/cart.view.php"><i class="fas fa-shopping-cart fa-lg" style="margin-left: 15px"></i></a>
+            <a href="../views/cart.view.php"><i class="fas fa-shopping-cart fa-lg" style="margin-right: 5px"></i></a>
             <?php } ?>
             <?php 
                 if(isset($_SESSION['cart'])) {
                     $count = count($_SESSION['cart']);
-                    echo "<span>$count</span>";
+                    echo "<span><b>$count</b></span>";
                 } else {
-                    echo "<span>0</span>";
+                    echo "<span><b>0</b></span>";
                 }
             ?>
-            <?php } ?>
-            
-            <!-- <a href="#" id="login_btn">Prisijungimas</a> -->
-            <a href="#" id="user_menu"><h6 style="color: black"><?php 
-            if(isset($_SESSION['username'])) {
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #a96d22;">
+               <?php if(isset($_SESSION['username'])) {
             echo($_SESSION['username']);
-            } ?></h6></a>
-            <div class="hidden_logout_btn" id="hidden_logout_btn">
-            <a href="../inc/logout.php">Atsijungti</a>
-            </div>
+            } ?>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="../inc/logout.php">Atsijungti</a>
+                </div>
+            </li>
+            </ul>
+            <?php } ?>
             </form>
         </div>
         </div>
@@ -137,7 +144,7 @@ if(isset($_POST['add_to_cart'])) {
     <div class="container">
         <?php if($getProductId) { ?>
             <?php foreach($getProductId as $productId) { ?>
-                <h3 style="margin-top: 55px"><?php echo $productId->getName(); ?></h3>
+                <h3 style="margin-top: 55px;"><?php echo $productId->getName(); ?></h3>
                 <br>
                 <div class="row justify-content-between">
                 <div class="card">
@@ -153,7 +160,7 @@ if(isset($_POST['add_to_cart'])) {
                 <?php if(!isset($_SESSION['username'])) { ?>
                     <br>
                     <strong>Pastaba!</strong>
-                    <p>Parduotuve gali naudotis tik uzsiregistrave vartotojai.</p>
+                    <p>Parduotuve gali naudotis tik užsiregistravę vartotojai.</p>
                 <?php } else { ?>
                     <?php if(isset($_SESSION['username'])) { ?>
                 <form action="product.view.php?product_id=<?php echo $productId->getId(); ?>" method="POST">
@@ -171,8 +178,19 @@ if(isset($_POST['add_to_cart'])) {
     </div>
     <?php } ?>
 <?php } ?>
-<!-- <div style="position: fixed; bottom: 0"> -->
+
 <?php include "../inc/footer.php"; ?>
-<!-- </div> -->
+
+<!-- jQuery Script CDN -->
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+<!-- JS for Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!-- My Script -->
+<script src="Script/myscript.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

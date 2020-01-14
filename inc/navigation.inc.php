@@ -2,6 +2,13 @@
 
 session_start();
 
+//require("../classes/database.class.php");
+//require("../classes/products.class.php");
+//require("../classes/getcategories.class.php");
+
+//$categories = new Products();
+//$getAllCategories = $categories->getCategory("SELECT * FROM product_category");
+
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +31,7 @@ session_start();
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid" style="width: 80%">
-        <a class="navbar-brand" href="#" style="color: #ffffff; font-family: 'Kaushan Script', cursive;">Online Store</a>
+        <a class="navbar-brand" href="../index.php" style="color: #ffffff; font-family: 'Kaushan Script', cursive;">Online Store</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -32,20 +39,21 @@ session_start();
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="../index.php">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="../index.php">Pagrindinis <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
-            </li>
+            </li> -->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
+                Ieškoti pagal kategoriją
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
+                <?php //if($getAllCategories) { ?>
+                    <?php //foreach($getAllCategories as $category) { ?>
+                        <a class="dropdown-item" href="product_by_category.php?category_id=<?php //echo $category->getId(); ?>"><?php //echo $category->getCategoryName(); ?></a>
+                    <?php //} ?>
+                <?php //} ?>
                 </div>
             </li>
             </ul>
@@ -69,16 +77,19 @@ session_start();
                     echo "<span><b>0</b></span>";
                 }
             ?>
-            <?php } ?>
-            
-            <!-- <a href="#" id="login_btn">Prisijungimas</a> -->
-            <a href="#" id="user_menu"><h6 style="color: black"><?php 
-            if(isset($_SESSION['username'])) {
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #a96d22;">
+               <?php if(isset($_SESSION['username'])) {
             echo($_SESSION['username']);
-            } ?></h6></a>
-            <div class="hidden_logout_btn" id="hidden_logout_btn">
-            <a href="../inc/logout.php">Atsijungti</a>
-            </div>
+            } ?>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="../inc/logout.php">Atsijungti</a>
+                </div>
+            </li>
+            </ul>
+            <?php } ?>                        
             </form>
         </div>
         </div>

@@ -37,7 +37,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['status'])) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- My Style -->
-    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="../CSS/style.css?v=<?php echo time(); ?>">
     <title>Document</title>
 </head>
 <body>
@@ -56,6 +56,8 @@ if(isset($_SESSION['username']) && isset($_SESSION['status'])) {
      <?php echo '<script>alert("Pirmiausia privalote prisijungti!")</script>'; ?>
      <?php header("Refresh:0.2; url=login.view.php"); ?>
  <?php } ?>
+</div>
+ <?php include "../inc/footer.php"; ?>
 <!-- jQuery Script CDN -->
 <!-- <script
   src="https://code.jquery.com/jquery-3.4.1.js"
