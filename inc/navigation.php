@@ -28,7 +28,7 @@ $getAllCategories = $categories->getCategory("SELECT * FROM product_category");
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <?php if($getAllCategories) { ?>
                     <?php foreach($getAllCategories as $category) { ?>
-                        <a class="dropdown-item" href="product_by_category.php?category_id=<?php echo $category->getId(); ?>"><?php echo $category->getCategoryName(); ?></a>
+                        <a class="dropdown-item" href="views/product_by_category.php?category_id=<?php echo $category->getId(); ?>"><?php echo $category->getCategoryName(); ?></a>
                     <?php } ?>
                 <?php } ?>
                 </div>

@@ -6,8 +6,8 @@ session_start();
 //require("../classes/products.class.php");
 //require("../classes/getcategories.class.php");
 
-//$categories = new Products();
-//$getAllCategories = $categories->getCategory("SELECT * FROM product_category");
+$categories = new Products();
+$getAllCategories = $categories->getCategory("SELECT * FROM product_category");
 
 ?>
 
@@ -49,11 +49,11 @@ session_start();
                 Ieškoti pagal kategoriją
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <?php //if($getAllCategories) { ?>
-                    <?php //foreach($getAllCategories as $category) { ?>
-                        <a class="dropdown-item" href="product_by_category.php?category_id=<?php //echo $category->getId(); ?>"><?php //echo $category->getCategoryName(); ?></a>
-                    <?php //} ?>
-                <?php //} ?>
+                <?php if($getAllCategories) { ?>
+                    <?php foreach($getAllCategories as $category) { ?>
+                        <a class="dropdown-item" href="product_by_category.php?category_id=<?php echo $category->getId(); ?>"><?php echo $category->getCategoryName(); ?></a>
+                    <?php } ?>
+                <?php } ?>
                 </div>
             </li>
             </ul>

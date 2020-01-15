@@ -4,6 +4,7 @@
 class Pagination extends Database {
 
     private $table,
+            //$category = 3,
             $total_records,
             $limit = 6;
 
@@ -30,6 +31,19 @@ class Pagination extends Database {
             $start = ($this->currentPage() * $this->limit) - $this->limit;
         }
         $query = "SELECT * FROM $this->table LIMIT $start, $this->limit";
+        $stmt = $this->connect()->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+
+    public function getDataByCategory($category) {
+
+        $start = 0;
+        if($this->currentPage() > 1) {
+            $start = ($this->currentPage() * $this->limit) - $this->limit;
+        }
+        $query = "SELECT * FROM $this->table WHERE product_category_id= '$category' LIMIT $start, $this->limit";
         $stmt = $this->connect()->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
