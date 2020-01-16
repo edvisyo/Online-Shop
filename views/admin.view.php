@@ -42,12 +42,14 @@ if(isset($_SESSION['username']) && isset($_SESSION['status'])) {
 </head>
 <body>
     <div class="container">
-    <h1>Admin page</h1>
+    <div style="margin-top: 30px; margin-bottom: 40px">
+    <h1>Administratoriaus puslapis</h1>
+    </div>
     <ul>
     <li><a href="addnewadmin.php" id="new_admin">Naujo administratoriaus registracija</a></li>
     <li><a href="addnewproduct.php">Naujo produkto įkėlimas</a></li>
     <li><a href="addnewcategory.php">Naujos prekės kategorijos sukūrimas</a></li>
-    <li><a href="editproducts.php">Redaguoti esamu prekiu sarasa</a></li>
+    <li><a href="editproducts.php">Redaguoti esamų prekių sarašą</a></li>
     <li><a href="orderlist.php">Užsakymų peržiūrėjimas</a></li>
     </ul>
         

@@ -81,21 +81,6 @@ class Products extends Database {
     }
 
 
-    public function deleteProduct($id) {
-
-        try {
-
-        $stmt = $this->connect()->prepare("DELETE FROM products WHERE id= '$id'"); 
-        $stmt->execute();
-        
-        return $stmt;
-
-        } catch(PDOException $e) {
-            return $e->getMessage();
-        }
-    }
-
-
     public function editProduct($id, $name, $description, $price) {
 
         try {

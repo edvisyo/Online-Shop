@@ -1,6 +1,6 @@
 <?php
 ob_start();
-include "../inc/navigation.inc.php";
+include "../inc/navigation.inc.php"; /*NELIESTI!*/
 require("../classes/database.class.php");
 require("../classes/orders.class.php");
 require("../classes/getorders.class.php");
@@ -36,12 +36,15 @@ if(isset($_GET['order_id'])) {
 </head>
 <body class="bg-light">  
 <div class="container">
+<div style="margin-top: 20px; margin-bottom: 20px">
     <a href="admin.view.php">Atgal</a>
+    </div>
+    <h3 style="margin-bottom: 30px">Užsakymai</h3>
     <?php if($getAll) { ?>
         <?php foreach($getAll as $order) { ?>
 <div class="my-3 p-3 bg-white rounded shadow-sm">
 <small class="d-block text-right mt-3">
-      <a href="orderlist.php?order_id=<?php echo $order->getId(); ?>">Zymeti kaip surinkta</a> 
+      <a href="orderlist.php?order_id=<?php echo $order->getId(); ?>">Žymėti kaip surinktą</a> 
     </small>
     <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>
     <div class="media text-muted pt-3">

@@ -1,7 +1,7 @@
 <?php 
 
 
-class Pagination extends Database {
+class CategoryPaging extends Database {
 
     private $table,
             $total_records,
@@ -10,44 +10,29 @@ class Pagination extends Database {
 
     public function __construct($table) {
         $this->table = $table;
-        $this->set_total_records();
+        $this->set_category_total_records();
     } 
-      
-    
-    public function set_total_records() {
 
-        $query = "SELECT id FROM products";
+
+    public function set_category_total_records() {
+
+        $query = "SELECT id FROM products WHERE product_category_id=" .$_GET['category_id'];
         $stmt = $this->connect()->prepare($query);
         $stmt->execute();
         $this->total_records = $stmt->rowCount();
     }
 
 
-    public function getData() {
+    public function getDataByCategory($category) {
 
         $start = 0;
         if($this->currentPage() > 1) {
             $start = ($this->currentPage() * $this->limit) - $this->limit;
         }
-        $query = "SELECT * FROM $this->table LIMIT $start, $this->limit";
+        $query = "SELECT * FROM $this->table WHERE product_category_id= '$category' LIMIT $start, $this->limit";
         $stmt = $this->connect()->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
-    }
-
-
-    public function deleteProduct($id) {
-
-        try {
-
-        $stmt = $this->connect()->prepare("DELETE FROM products WHERE id= '$id'"); 
-        $stmt->execute();
-        
-        return $stmt;
-
-        } catch(PDOException $e) {
-            return $e->getMessage();
-        }
     }
 
     

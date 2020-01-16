@@ -69,7 +69,10 @@ $getCategoriesList = $db->getCategory("SELECT * FROM product_category");
 </head>
 <body>
     <div class="container">
+    <div style="margin-top: 20px; margin-bottom: 50px">
     <a href="admin.view.php">Atgal</a>
+    </div>
+
     <form action="addnewproduct.php" method="POST" enctype="multipart/form-data">
         <?php if(isset($registered) && $registered == TRUE) { ?>
             <div class="alert alert-success" role="alert">
@@ -102,6 +105,7 @@ $getCategoriesList = $db->getCategory("SELECT * FROM product_category");
         <br>
         <button type="submit" name="add_product" class="btn btn-primary">Įkelti</button>
     </form>
+
     </div>
     <?php ob_end_flush(); ?>
 </body>

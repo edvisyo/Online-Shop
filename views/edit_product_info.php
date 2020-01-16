@@ -33,8 +33,10 @@ if(isset($_POST['confirm_edit'])) {
 </head>
 <body>
     <div class="container">
+    <div style="margin-top: 20px">
     <a href="editproducts.php">Atgal</a>
-        <h5>Edit page</h5>
+    </div>
+        <h3 style="margin-top: 30px; margin-bottom: 50px">Prekės redagavimo puslapis</h3>
         <form action="edit_product_info.php" method="POST">
         <?php if($choosed) { ?>
         <?php foreach($choosed as $editprod) {?>
@@ -47,7 +49,13 @@ if(isset($_POST['confirm_edit'])) {
         </form>
         <?php } ?>
         <?php } ?>
-<?php ob_end_flush(); ?>
+
+
+
     </div>
+
+    <?php include "../inc/footer.php"; ?>
+
+    <?php ob_end_flush(); ?>
 </body>
 </html>

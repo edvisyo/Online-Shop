@@ -29,7 +29,9 @@ if(isset($_POST['add'])) {
 </head>
 <body>
     <div class="container">
+    <div style="margin-top: 20px; margin-bottom: 50px">
     <a href="admin.view.php">Atgal</a>
+    </div>
         <form action="addnewcategory.php" method="POST">
             Kategorijos pavadinimas: <input type="text" name="category" class="form-control" autocomplete="off">
             <br>

@@ -10,7 +10,7 @@ $pages = $pagination->getPageNumbers();
 
 if(isset($_GET['delete_id'])) {
     $id = $_GET['delete_id'];
-    $result = $prod->deleteProduct($id);
+    $result = $pagination->deleteProduct($id);
 
     if($result) {
         echo '<script>alert("Produktas pašalintas")</script>';
@@ -30,9 +30,10 @@ if(isset($_GET['delete_id'])) {
 </head>
 <body>
     <div class="container">
-
+    <div style="margin-top: 20px">
     <a href="admin.view.php">Atgal</a>
-    <h3>Prekių redagavimo puslapis</h3>
+    </div>
+    <h3 style="margin-top: 30px; margin-bottom: 50px">Prekių redagavimo puslapis</h3>
         <?php if(!empty($_SESSION['message'])) { ?>
         <div class="alert alert-success" role="alert" style="text-align: center">
             <?php echo $_SESSION['message']; ?>
@@ -64,7 +65,7 @@ if(isset($_GET['delete_id'])) {
         </tbody>
         </table>
 
-        <nav aria-label="Page navigation example">
+        <nav aria-label="Page navigation example" style="margin-bottom: 80px">
         <ul class="pagination justify-content-center">
             <li class="page-item">
             <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
@@ -79,7 +80,7 @@ if(isset($_GET['delete_id'])) {
         </nav>
 
     </div>
-    
+    <?php include "../inc/footer.php"; ?>
    <?php ob_end_flush(); ?> 
 </body>
 </html>

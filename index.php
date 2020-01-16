@@ -72,7 +72,10 @@ session_start();
             <li class="page-item"><a class="page-link" href="index.php?page=<?php echo $page; ?>"><?php echo $page; ?></a></li>
             <?php } ?>
             <li class="page-item">
-            <a class="page-link" href="index.php?page=3">Last</a>
+            <?php if($page != $pages) { ?>
+            <?php   $next = $pages+1; ?>
+            <a class="page-link" href="index.php?page=<?php echo $next; ?>">Next</a>
+            <?php } ?>
             </li>
         </ul>
         </nav>

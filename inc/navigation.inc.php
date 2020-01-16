@@ -6,8 +6,8 @@ session_start();
 //require("../classes/products.class.php");
 //require("../classes/getcategories.class.php");
 
-$categories = new Products();
-$getAllCategories = $categories->getCategory("SELECT * FROM product_category");
+//$categories = new Products();
+//$getAllCategories = $categories->getCategory("SELECT * FROM product_category");
 
 ?>
 
@@ -95,6 +95,7 @@ $getAllCategories = $categories->getCategory("SELECT * FROM product_category");
         </div>
         </nav>
     
+    <?php include "../inc/footer.php"; ?>
 
 
     <!-- jQuery Script CDN -->

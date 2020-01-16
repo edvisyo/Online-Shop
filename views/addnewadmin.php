@@ -38,7 +38,9 @@ if(isset($_SESSION['username']) && isset($_SESSION['status'])) {
 </head>
 <body>
     <div class="container">
+    <div style="margin-top: 20px; margin-bottom: 50px">
     <a href="admin.view.php">Atgal</a>
+    </div>
         <div class="row justify-content-center">
         <form action="addnewadmin.php" method="POST" id="new_admin_regist">
         <?php if(isset($registered) && $registered == TRUE) { ?>
