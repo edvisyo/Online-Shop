@@ -1,4 +1,5 @@
 <?php 
+
 require("../classes/database.class.php");
 require("../classes/products.class.php");
 require("../classes/getproducts.class.php");
