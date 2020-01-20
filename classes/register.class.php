@@ -67,6 +67,18 @@ class Register extends Database {
     }
 
 
+    public function loginAfterRegister($email, $password) {
+
+        $stmt = $this->connect()->prepare("SELECT * FROM users WHERE email= :email AND password= :password");
+        $stmt->execute(array('email' => $email, 'password' => $password));
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($stmt->rowCount() > 0) {
+            $_SESSION['username'] = $row['email'];
+            $_SESSION['userId'] = $row['id'];
+            }
+    }
+
+
 
 }
 

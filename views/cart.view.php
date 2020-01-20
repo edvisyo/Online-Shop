@@ -1,10 +1,10 @@
 <?php
 ob_start();
 include "../inc/navigation.inc.php";
-require("../classes/database.class.php");
-require("../classes/products.class.php");
-require("../classes/getproducts.class.php");
-require("../classes/orders.class.php");
+require_once("../classes/database.class.php");
+require_once("../classes/products.class.php");
+require_once("../classes/getproducts.class.php");
+require_once("../classes/orders.class.php");
 
 
 if(isset($_SESSION['cart'])) {
@@ -17,19 +17,6 @@ $total_price = array_column($_SESSION['cart'], 'total_price');
 $total = array_sum($total_price);
 
 $getProducts = $product->getProducts("SELECT * FROM products WHERE id IN (" . implode(',', $product_id) . ")");
-//print_r($_SESSION['cart']);
-// if(!empty($_SESSION['cart'])) {
-//     foreach($_SESSION['cart'] as $item => $value) {
-//         if($value['product_Id'] == $product_id) {
-//             unset($_SESSION["cart"][$item]);
-//         }
-//     } 
-// }
-
-// if(isset($_POST['delete'])) {
-//     unset($_SESSION["cart"][$item]);
-//     header("Location: cart.view.php");
-// } 
 
 
 if(isset($_GET['productID'])) {
@@ -58,6 +45,7 @@ else if (isset($_POST['buy'])) {
 
     if($insert = TRUE) {
         $order_success = TRUE;
+        unset($_SESSION['cart']);
     }   else {
            printf("Iskilo problemu vykdant jusu uzsakyma");
            exit();
@@ -88,7 +76,7 @@ else if (isset($_POST['buy'])) {
 <body>
 
     <div class="container">
-        <h4>Jūsų prekių krepšelis</h4>
+        <h4 style="margin-top: 20px; margin-bottom: 30px">Jūsų prekių krepšelis</h4>
         <form action="cart.view.php" method="POST">
 
         <?php if(isset($order_success) && $order_success == TRUE) { ?>
@@ -116,14 +104,12 @@ else if (isset($_POST['buy'])) {
                 <tr>
                 <td><img src="../IMG/<?php echo $products->getImage(); ?>" style="width: 130px; height: 130px" class="card-img-top" alt="..."></td>
                 <td><?php echo $products->getName(); ?></td>
-                <td><?php 
-                    foreach($quantity as $key => $value) {
-                        echo $value;
+                <td><?php
+                    foreach($quantity as $item => $value) {
+                            echo $value; 
                     } 
                 ?></td> 
                 <td><?php echo $products->getPrice(); ?>&euro;</td>
-                <!-- <td><button type="submit" name="delete" class="btn btn-danger">Pašalinti</button></td>  -->
-                <!-- <td><a href="cart.view.php?productID=<?php //echo $products->getId(); ?>">Pašalinti</a></td> -->
                 <td><a href="cart.view.php?productID=<?php echo $products->getId(); ?>" class="btn btn-danger">Pašalinti</a></td> 
                 </tr>
                 <?php } ?>
@@ -134,20 +120,20 @@ else if (isset($_POST['buy'])) {
             <?php } ?>
             </tbody>
             </table>
-            <div class="row justify-content-between" style="margin-top: 50px">
-            <div class="totalprice">
-            <h5>Pilna kaina: <?php echo $total; ?>&euro;</h5>
-            </div>
-            <div class="orderbtn">
-            <button name="buy" class="btn btn-success">Pateikti užsakymą</button>
-            </div>
-            </div>
+                <div class="row justify-content-between" style="margin-top: 50px">
+                <div class="totalprice">
+                <h5>Pilna kaina: <?php echo $total; ?>&euro;</h5>
+                </div>
+                <div class="orderbtn">
+                <button name="buy" class="btn btn-success">Pateikti užsakymą</button>
+                </div>
+                </div>
             </form>
     </div>
 
     <?php } else { ?>
     <div class="container"> 
-    <h4>Jūsų prekių krepšelis</h4>
+    <h4 style="margin-top: 30px; margin-bottom: 40px">Jūsų prekių krepšelis</h4>
         <table class="table">
             <thead class="thead-light">
                 <tr>

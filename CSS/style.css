@@ -4,31 +4,12 @@
     display: none; 
 }
 
-.registerForm {
-    position: absolute;
-    z-index: 1;
-    display: none;
-}
-
-.hide_login_register_btns {
-    display: none;
-}
-
 .container-fluid {
     width: 80%;
 }
 
 #user_menu {
     margin-left: 15px;
-}
-
-.hidden_logout_btn {
-    display: none;
-    margin-left: 15px;
-}
-
-#new_admin_regist {
-    display: block;
 }
 
 footer {
@@ -51,6 +32,10 @@ footer a {
 i {
     color: #ffffff;
     text-decoration: underline;
+}
+
+.active {
+    z-index: -1;
 }
 
 span {

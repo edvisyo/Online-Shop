@@ -1,28 +1,9 @@
 <?php
 include"../inc/navigation.inc.php";
-require("../classes/database.class.php");
-require("../classes/register.class.php");
+require_once("../classes/database.class.php");
+require_once("../classes/register.class.php");
 
 if(isset($_SESSION['username']) && isset($_SESSION['status'])) {
-
-    // $admin_user = 1;
-    // $add_admin = new Register();
-
-    // if(isset($_POST['regist'])) {
-    //     $name = $_POST['name'];
-    //     $password = $_POST['password'];
-    //     $user_status_id = $admin_user;
-
-    //     $result = $add_admin->adminRegister($name, md5($password), $user_status_id);
-
-    //     if($result) {
-    //         $registered = TRUE;
-    //     } else {
-    //         printf("REGISTER ERROR");
-    //         exit();
-    //     }
-
-    // }
 
 
 ?>
@@ -56,16 +37,11 @@ if(isset($_SESSION['username']) && isset($_SESSION['status'])) {
         <?php } else { ?>
      
      <?php echo '<script>alert("Pirmiausia privalote prisijungti!")</script>'; ?>
-     <?php header("Refresh:0.2; url=login.view.php"); ?>
+     <?php header("Refresh:0.2; url=../index.php"); ?>
  <?php } ?>
 </div>
  <?php include "../inc/footer.php"; ?>
-<!-- jQuery Script CDN -->
-<!-- <script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script> -->
-<!-- My Script -->
+
 <script src="../Script/myscript.js"></script>
 </body>
 </html>

@@ -1,13 +1,7 @@
 <?php
-//require("classes/database.class.php");
-require("classes/login.class.php");
-require("inc/user.validation.inc.php");
+include_once "inc/autoloader.inc.php";
+require_once("inc/user.validation.inc.php");
 
-//session_start();
-
-// if(isset($_SESSION['username']) || isset($_COOKIE['username'])) {
-//     header("Location: index.php");
-// }
 
 if(isset($_POST['login'])) {
 
@@ -20,18 +14,17 @@ if(isset($_POST['login'])) {
 
     $email = $_POST['email'];
     $password = $_POST['password'];
-    //$remember = isset($_POST['remember_me']) == true ? 1 : 0;
+    $remember = isset($_POST['remember_me']) == true ? 1 : 0;
 
     
-    $loginSuccess = $logIn->LoginUsers($email, md5($password)); //$remember);
+    $loginSuccess = $logIn->LoginUsers($email, md5($password), $remember);
 
     if($loginSuccess == true) {
         return true;
-        //header("Location: ../index.php");
     } else {
         header("Location: ../views/register.view.php");
     }
-}
+} 
 }
 
 
@@ -57,15 +50,9 @@ if(isset($_POST['login'])) {
         <div class="card" style="width: 24rem;">
         <div class="card-body">
             <button type="button" id="close_login_form" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                <span aria-hidden="true" style="color: black">&times;</span>
+                <span aria-hidden="true" style="color: black; z-index: 1">&times;</span>
             </button>
-                <?php if(isset($errors) && count($errors) > 0) {
-                foreach($errors as $error) { ?>
-                    <div class="alert alert-danger" role="alert">
-                        <?php echo $error; ?>
-                    </div>
-                    <?php } ?>
-                <?php } ?>
+                
                 <div class="row justify-content-center">
                     <h5 class="card-title">Prisijungimas</h5>
                 </div>
@@ -77,6 +64,7 @@ if(isset($_POST['login'])) {
                 </div>
                 <label for="checkbox">Atsiminti mane</label>
                 <input type="checkbox" id="checkbox" name="remember_me"><br>
+                <p>Dar ne narys? <a href="views/register.view.php">Registruokis</a></p>
                 <button type="submit" id="loginBtn" name="login" style="margin-top: 8px; margin-bottom: 5px" class="btn btn-outline-primary btn-sm">Prisijungti</button>
                 <div>
         </div>

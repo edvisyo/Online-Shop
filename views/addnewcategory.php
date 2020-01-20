@@ -1,7 +1,7 @@
 <?php
 include"../inc/navigation.inc.php";
-require("../classes/database.class.php");
-require("../classes/products.class.php");
+require_once("../classes/database.class.php");
+require_once("../classes/products.class.php");
 
 if(isset($_POST['add'])) {
 

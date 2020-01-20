@@ -7,7 +7,7 @@ class Getproducts {
             $description,
             $price,
             $image;
-            //$product_category_id;
+            
 
     public function __construct($dbRows) {
 

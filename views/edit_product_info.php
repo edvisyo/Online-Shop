@@ -1,9 +1,9 @@
 <?php
 ob_start();
 include_once "../inc/navigation.inc.php";
-require("../classes/database.class.php");
-require("../classes/products.class.php");
-require("../classes/getproducts.class.php");
+require_once("../classes/database.class.php");
+require_once("../classes/products.class.php");
+require_once("../classes/getproducts.class.php");
 
 $id = $_GET['edit_id'];
 $edit = new Products();
@@ -42,7 +42,7 @@ if(isset($_POST['confirm_edit'])) {
         <?php foreach($choosed as $editprod) {?>
         <input type="hidden" name="hidden_id" value="<?php echo $editprod->getId(); ?>">
         Pavadinimas: <input type="text" name="name" class="form-control" value="<?php echo $editprod->getName(); ?>">
-        Aprasymas: <textarea class="form-control" name="description" aria-label="With textarea"><?php echo $editprod->getDescription(); ?></textarea>
+        Aprašymas: <textarea class="form-control" name="description" aria-label="With textarea"><?php echo $editprod->getDescription(); ?></textarea>
         Kaina: <input type="text" name="price" class="form-control" value="<?php echo $editprod->getPrice(); ?>&euro;">
         <hr>
         <button type="submit" name="confirm_edit" class="btn btn-success">Patvirtinti pakeitimus</button>

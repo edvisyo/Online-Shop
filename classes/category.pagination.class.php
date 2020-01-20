@@ -23,6 +23,17 @@ class CategoryPaging extends Database {
     }
 
 
+    public function getCategory() {
+
+        $stmt = $this->connect()->prepare("SELECT * FROM product_category");
+        $stmt->execute();
+        while($row = $stmt->fetchAll(PDO::FETCH_ASSOC)) {
+            return $row;
+        }
+
+    }
+
+
     public function getDataByCategory($category) {
 
         $start = 0;
@@ -43,5 +54,17 @@ class CategoryPaging extends Database {
     
     public function getPageNumbers() {
         return ceil($this->total_records / $this->limit);
+    }
+
+    public function prevPage() {
+        return ($this->currentPage() - 1);
+    }
+
+    public function nextPage($page) {
+        return ($this->currentPage($page) + 1);
+    }
+
+    public function is_active($page) {
+        return ($page == $this->currentPage()) ? 'active' : '';
     }
 }

@@ -1,6 +1,6 @@
 <?php
-require("classes/products.class.php");
-require("classes/getcategories.class.php");
+require_once("classes/products.class.php");
+require_once("classes/getcategories.class.php");
 
 $categories = new Products();
 $getAllCategories = $categories->getCategory("SELECT * FROM product_category");
@@ -35,10 +35,9 @@ $getAllCategories = $categories->getCategory("SELECT * FROM product_category");
             <?php if(!isset($_SESSION['username'])) { ?>
             <div id="btns" style="margin-left: 20px">
             <a href="#" id="login_btn" style="text-decoration: none; margin-right: 15px; color: #a96d22"><b>Prisijungimas</b></a>
-            <a href="#" id="register_btn" style="text-decoration: none; color: #a96d22"><b>Registracija</b></a> 
             </div>
             <?php } else { ?>
-            <?php if(isset($_SESSION['username'])) { ?>
+            <?php if(isset($_SESSION['username']) || isset($_COOKIE['username'])) { ?>
             <a href="views/cart.view.php"><i class="fas fa-shopping-cart fa-lg" style="margin-right: 5px"></i></a>
             <?php } ?>
             <?php 
@@ -52,11 +51,14 @@ $getAllCategories = $categories->getCategory("SELECT * FROM product_category");
             <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #a96d22;">
-               <?php if(isset($_SESSION['username'])) {
+               <?php if(isset($_SESSION['username']) || isset($_COOKIE['username'])) {
             echo($_SESSION['username']);
             } ?>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <?php if(isset($_SESSION['status'])) { ?>    
+                <a class="dropdown-item" href="views/admin.view.php">Administratoriaus puslapis</a>
+                    <?php } ?>
                 <a class="dropdown-item" href="inc/logout.php">Atsijungti</a>
                 </div>
             </li>

@@ -1,8 +1,5 @@
 <?php
-include_once "classes/database.class.php";
-//require("classes/products.class.php");
-//require("classes/getproducts.class.php");
-require("classes/pagination.class.php");
+include_once "inc/autoloader.inc.php";
 
 $pagination = new Pagination('products');
 $allProducts = $pagination->getData();
@@ -32,17 +29,21 @@ session_start();
 <body class="bg-light">
 
 <header>
-                <?php include "inc/navigation.php"; ?>
+                <?php include "navigation.php"; ?>
 </header>
      
 <main>   
                 <!-- Hidden Login Form  -->
                 <?php include "views/login.view.php"; ?>
                 <!-- End Login Form -->
-                <!-- Hidden Register From -->
-                <?php include "views/register.view.php"; ?>
-                <!-- End Register Form -->
     <div class="container">
+    <?php if(isset($errors) && count($errors) > 0) {
+                foreach($errors as $error) { ?>
+                    <div class="alert alert-danger" role="alert" style="text-align: center">
+                        <?php echo $error; ?>
+                    </div>
+                    <?php } ?>
+                <?php } ?>
         <div class="row justify-content-between">
     <?php if($allProducts) { ?>
     <?php foreach($allProducts as $product) { ?>
@@ -66,16 +67,13 @@ session_start();
         <nav aria-label="Page navigation example" style="margin-bottom: 80px">
         <ul class="pagination justify-content-center">
             <li class="page-item">
-            <a class="page-link" href="index.php?page=1" tabindex="-1" aria-disabled="true">First</a>
+            <a class="page-link" href="index.php?page=<?php echo $pagination->prevPage(); ?>" tabindex="-1" aria-disabled="true">Atgal</a>
             </li>
             <?php for($page = 1; $page <= $pages; $page++) { ?>
-            <li class="page-item"><a class="page-link" href="index.php?page=<?php echo $page; ?>"><?php echo $page; ?></a></li>
+            <li class="page-item <?php echo $pagination->is_active($page); ?>"><a class="page-link" href="index.php?page=<?php echo $page; ?>"><?php echo $page; ?></a></li>
             <?php } ?>
             <li class="page-item">
-            <?php if($page != $pages) { ?>
-            <?php   $next = $pages+1; ?>
-            <a class="page-link" href="index.php?page=<?php echo $next; ?>">Next</a>
-            <?php } ?>
+            <a class="page-link" href="index.php?page=<?php echo $pagination->nextPage($page); ?>">Pirmyn</a>
             </li>
         </ul>
         </nav>
@@ -85,14 +83,6 @@ session_start();
     
     <?php include "inc/footer.php"; ?>
 
-
-<?php //} else { ?>
-     
-    <?php //echo '<script>alert("Neteisingai ivesti duomenys")</script>'; ?>
-    <?php //header("Refresh:0.1; url=views/login.view.php"); ?>
-    <?php //header("Refresh:0.1; url=index.php"); ?>
-    <?php //header("Refresh:0.1; url=views/register.view.php"); ?>
-<?php //} ?>
 
 <!-- jQuery Script CDN -->
 <script

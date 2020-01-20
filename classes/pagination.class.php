@@ -59,4 +59,16 @@ class Pagination extends Database {
     public function getPageNumbers() {
         return ceil($this->total_records / $this->limit);
     }
+
+    public function prevPage() {
+        return ($this->currentPage() - 1);
+    }
+
+    public function nextPage($page) {
+        return ($this->currentPage($page) + 1);
+    }
+
+    public function is_active($page) {
+        return ($page == $this->currentPage()) ? 'active' : '';
+    }
 }

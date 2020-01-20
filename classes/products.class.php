@@ -1,6 +1,5 @@
 <?php
 
-
 class Products extends Database {
 
 
@@ -98,5 +97,7 @@ class Products extends Database {
         }
     }
 
+
+    
 
 }

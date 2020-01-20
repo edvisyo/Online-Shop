@@ -3,7 +3,7 @@
 class Login extends Database {
 
 
-        public function loginUsers($email, $password) {
+        public function loginUsers($email, $password, $remember) {
 
             try {
 
@@ -20,6 +20,8 @@ class Login extends Database {
                         $_SESSION['username'] = $row['email'];
                         $_SESSION['userId'] = $row['id'];
                         header("Location: index.php");
+                    } if($remember == 1) {
+                        setcookie("username", $_SESSION['username'],time()+3600*24*15,'/');
                     }
         } 
             return true;

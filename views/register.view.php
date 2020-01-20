@@ -1,14 +1,10 @@
 <?php
+include_once "../classes/database.class.php";
+include_once "../classes/register.class.php";
+require_once("../inc/register.validation.inc.php");
 
-//include_once "../classes/database.class.php";
-include_once "classes/register.class.php";
-require("inc/register.validation.inc.php");
+session_start();
 
-// session_start();
-
-// if(isset($_SESSION['username'])) {
-//     header("Location: ../index.php");
-// }
 
 if(isset($_POST['send'])) {
 
@@ -48,36 +44,38 @@ if(isset($_POST['send'])) {
     <!-- Bootstrap CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap" rel="stylesheet">
+    <!-- My CSS -->
+    <link href="../CSS/style.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css" /> 
     <title>Register</title>
 </head>
-<body>
-
-    <div class="row justify-content-center" style="margin-top: 0px">
+<body class="bg-light">
+<h1 style="text-align: center; font-family: 'Kaushan Script', cursive; margin-top: 30px">Online Store</h1>
+    <div class="row justify-content-center" style="margin-top: 30px">
     <div class="registerForm" id="registerForm">
-        <form action="index.php" method="POST">
-        <div class="card" style="width: 24rem;">
+        <form action="register.view.php" method="POST">
+        <div class="" style="width: 58rem;">
         <div class="card-body">
-            <button type="button" id="close_register_form" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                <span aria-hidden="true" style="color: black">&times;</span>
-            </button>
+            </button> 
+                <div class="row justify-content-center">
+                    <h4 class="card-title">Registracija</h4>
+                </div>
                 <?php if(isset($errors) && count($errors) > 0) {
                 foreach($errors as $error) { ?>
-                    <div class="alert alert-danger" role="alert">
+                    <div class="alert alert-danger" role="alert" style="text-align: center">
                         <?php echo $error; ?>
                     </div>
-                    <?php } ?>
+                <?php } ?>
                 <?php } else if(isset($success) && $success == TRUE) { ?>
                     <div class="alert alert-success" role="alert">
                     <div style="text-align: center;">
                         <p>Registracija sėkminga!</p>
-                        <p>Greit būsite nukreipti į prisijungimą</p>
+                        <?php $regist->loginAfterRegister($email, md5($password)); ?>
                         </div>
                     </div>
-                    <?php header("Refresh:4; url=login.view.php") ?>
+                    <?php header("Refresh:4; url=../index.php") ?>
                 <?php }  ?>
-                <div class="row justify-content-center">
-                    <h5 class="card-title">Registracija</h5>
-                </div>
                 <div class="input-group input-group-sm mb-3">
                     <input type="text" name="name" class="form-control"  aria-label="Sizing example input" placeholder="Jūsų Vardas" aria-describedby="inputGroup-sizing-sm" autocomplete="off">
                 </div>
@@ -97,6 +95,6 @@ if(isset($_POST['send'])) {
         </form> 
     </div>
     </div>
-
+<?php include "../inc/footer.php"; ?>
 </body>
 </html>

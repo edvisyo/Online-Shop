@@ -1,8 +1,8 @@
 <?php
 ob_start();
 include_once "../inc/navigation.inc.php";
-require("../classes/database.class.php");
-require("../classes/pagination.class.php");
+require_once("../classes/database.class.php");
+require_once("../classes/pagination.class.php");
 
 $pagination = new Pagination('products');
 $allProducts = $pagination->getData();
@@ -26,6 +26,8 @@ if(isset($_GET['delete_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- My CSS -->
+    <link href="../CSS/style.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css" /> 
     <title>Esamu prekiu redagavimas</title>
 </head>
 <body>
@@ -68,13 +70,13 @@ if(isset($_GET['delete_id'])) {
         <nav aria-label="Page navigation example" style="margin-bottom: 80px">
         <ul class="pagination justify-content-center">
             <li class="page-item">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            <a class="page-link" href="editproducts.php?page=<?php echo $pagination->prevPage(); ?>" tabindex="-1" aria-disabled="true">Atgal</a>
             </li>
             <?php for($page = 1; $page <= $pages; $page++) { ?>
-            <li class="page-item"><a class="page-link" href="editproducts.php?page=<?php echo $page; ?>"><?php echo $page ?></a></li>
+            <li class="page-item <?php echo $pagination->is_active($page); ?>"><a class="page-link" href="editproducts.php?page=<?php echo $page; ?>"><?php echo $page ?></a></li>
             <?php } ?>
             <li class="page-item">
-            <a class="page-link" href="#">Next</a>
+            <a class="page-link" href="editproducts.php?page=<?php echo $pagination->nextPage($page); ?>">Pirmyn</a>
             </li>
         </ul>
         </nav>

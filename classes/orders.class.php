@@ -2,19 +2,7 @@
 
     class Orders extends Database {
 
-        public function makeOrder($user_id, $product_id, $product_name, $product_price, $product_quantity, $total_price) {
-
-            // $product_id = array();
-            // $product_name = array();
-            // $product_price = array();
-            // $product_quantity = array();
-
-            // if ($product_id != Null && $product_name != Null && $product_price != Null && $product_quantity != Null){
-            //     $product_id = implode("|", $product_id);
-            //     $product_name = implode("|", $product_name);
-            //     $product_price = implode("|", $product_price);
-            //     $product_quantity = implode("|", $product_quantity);
-            // }
+    public function makeOrder($user_id, $product_id, $product_name, $product_price, $product_quantity, $total_price) {
 
         try {
 

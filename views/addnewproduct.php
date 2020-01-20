@@ -1,9 +1,9 @@
 <?php
 ob_start(); 
 include"../inc/navigation.inc.php";
-require("../classes/database.class.php");
-require("../classes/products.class.php");
-require("../classes/getcategories.class.php");
+require_once("../classes/database.class.php");
+require_once("../classes/products.class.php");
+require_once("../classes/getcategories.class.php");
 
 if(isset($_POST['add_product'])) {
 
@@ -32,15 +32,14 @@ if(isset($_POST['add_product'])) {
             if($fileSize < 1000000) {
                 $fileDestination = '../IMG/'. $fileName;
                 move_uploaded_file($fileTmpName, $fileDestination);
-                //header("Location: ../views/addnewproduct.php?nuotrauka_ikelta");
             } else {
                 echo "Failo dydis per didelis!";
             }
         } else {
-            echo "Iskilo problemu ikeliant jusu faila!";
+            echo "Iškilo problemų įkeliant jūsų faila!";
         }
     } else {
-        echo "Sitas failo tipas negalimas ikelti!";
+        echo "Šitas failo tipas negalimas įkelti!";
     }
 
     $result = $add_new_product->productRegister($name, $description, $price, $image, $product_category_id);

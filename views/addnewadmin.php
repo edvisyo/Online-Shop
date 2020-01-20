@@ -1,9 +1,8 @@
 <?php
 include"../inc/navigation.inc.php";
-require("../classes/database.class.php");
-require("../classes/register.class.php");
+require_once("../classes/database.class.php");
+require_once("../classes/register.class.php");
 
-//session_start();
 
 if(isset($_SESSION['username']) && isset($_SESSION['status'])) {
 
@@ -46,10 +45,9 @@ if(isset($_SESSION['username']) && isset($_SESSION['status'])) {
         <?php if(isset($registered) && $registered == TRUE) { ?>
         <div class="alert alert-success" role="alert">
             <div style="text-align: center;">
-            <?php echo "Naujas administratorius uzregistruotas sekmingai!"; ?>
+            <?php echo "Naujas administratorius užregistruotas sėkmingai!"; ?>
             </div>
         </div>
-        <?php //header('Refresh:3; url=admin.view.php');?>
         <?php } ?>
         <h3>Naujo administratoriaus registravimas</h3>
             Vardas: <input type="text" name="name" autocomplete="off" class="form-control">
@@ -63,14 +61,9 @@ if(isset($_SESSION['username']) && isset($_SESSION['status'])) {
         <?php } else { ?>
      
      <?php echo '<script>alert("Pirmiausia privalote prisijungti!")</script>'; ?>
-     <?php header("Refresh:0.2; url=login.view.php"); ?>
+     <?php header("Refresh:0.2; url=../index.php"); ?>
  <?php } ?>
-<!-- jQuery Script CDN -->
-<!-- <script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script> -->
-<!-- My Script -->
+
 <script src="../Script/myscript.js"></script>
 </body>
 </html>

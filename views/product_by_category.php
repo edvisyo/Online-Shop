@@ -1,18 +1,16 @@
 <?php 
-require("../classes/database.class.php");
-require("../classes/products.class.php");
-require("../classes/getcategories.class.php");
-require("../classes/category.pagination.class.php");
+require_once("../classes/database.class.php");
+require_once("../classes/products.class.php");
+require_once("../classes/getcategories.class.php");
+require_once("../classes/category.pagination.class.php");
 
 session_start();
-
-
-//$products = new Products();
-//$getCategories = $products->getCategory("SELECT * FROM product_category");
 
 $category = $_GET['category_id'];
 
 $pagination = new CategoryPaging('products');
+$allCategories = $pagination->getCategory();
+
 $allProducts = $pagination->getDataByCategory($category);
 $pages = $pagination->getPageNumbers();
 
@@ -50,33 +48,26 @@ $pages = $pagination->getPageNumbers();
             <li class="nav-item">
                 <a class="nav-link" href="../index.php">Pagrindinis <span class="sr-only">(current)</span></a>
             </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li> -->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Ieškoti pagal kategoriją
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <?php if($getCategories) { ?>
-                    <?php foreach($getCategories as $category) { ?>
-                        <a class="dropdown-item" href="views/product_by_category.php?category_id=<?php echo $category->getId(); ?>"><?php echo $category->getCategoryName(); ?></a>
+                <?php if($allCategories) { ?>
+                    <?php foreach($allCategories as $row) { ?>
+                        <a class="dropdown-item" href="product_by_category.php?category_id=<?php echo $row['id']; //echo $category->id; ?>"><?php echo $row['category_name']; //echo $category->name; ?></a>
                     <?php } ?>
                 <?php } ?>
                 </div>
             </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-            <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button> -->
             <?php if(!isset($_SESSION['username'])) { ?>
             <div id="btns" style="margin-left: 20px">
-            <a href="#" id="login_btn" style="text-decoration: none; margin-right: 15px; color: #a96d22"><b>Prisijungimas</b></a>
-            <a href="#" id="register_btn" style="text-decoration: none; color: #a96d22"><b>Registracija</b></a> 
             </div>
             <?php } else { ?>
             <?php if(isset($_SESSION['username'])) { ?>
-            <a href="views/cart.view.php"><i class="fas fa-shopping-cart fa-lg" style="margin-right: 5px"></i></a>
+            <a href="cart.view.php"><i class="fas fa-shopping-cart fa-lg" style="margin-right: 5px"></i></a>
             <?php } ?>
             <?php 
                 if(isset($_SESSION['cart'])) {
@@ -94,6 +85,9 @@ $pages = $pagination->getPageNumbers();
             } ?>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <?php if(isset($_SESSION['status'])) { ?>    
+                <a class="dropdown-item" href="../views/admin.view.php">Administratoriaus puslapis</a>
+                    <?php } ?>
                 <a class="dropdown-item" href="../inc/logout.php">Atsijungti</a>
                 </div>
             </li>
@@ -105,10 +99,11 @@ $pages = $pagination->getPageNumbers();
         </div>
         </nav>
 
-    <?php //include "../inc/navigation.inc.php"; ?>
-
     </header>
     <main>
+
+    
+
     <div class="container">
     <div class="row justify-content-between">
     <?php if($allProducts) { ?>
@@ -137,13 +132,13 @@ $pages = $pagination->getPageNumbers();
         <nav aria-label="Page navigation example" style="margin-bottom: 80px">
         <ul class="pagination justify-content-center">
             <li class="page-item">
-            <a class="page-link" href="index.php?page=1" tabindex="-1" aria-disabled="true">First</a>
+            <a class="page-link" href="product_by_category.php?category_id=<?php echo $category; ?>&page=<?php echo $pagination->prevPage(); ?>" tabindex="-1" aria-disabled="true">Atgal</a>
             </li>
             <?php for($page = 1; $page <= $pages; $page++) { ?>
-            <li class="page-item"><a class="page-link" href="product_by_category.php?category_id=<?php echo $category; ?>&page=<?php echo $page; ?>"><?php echo $page; ?></a></li> 
+            <li class="page-item <?php echo $pagination->is_active($page); ?>"><a class="page-link" href="product_by_category.php?category_id=<?php echo $category; ?>&page=<?php echo $page; ?>"><?php echo $page; ?></a></li> 
             <?php } ?>
             <li class="page-item">
-            <a class="page-link" href="index.php?page=3">Last</a>
+            <a class="page-link" href="product_by_category.php?category_id=<?php echo $category; ?>&page=<?php echo $pagination->nextPage($page) ?>">Pirmyn</a>
             </li>
         </ul>
         </nav>
