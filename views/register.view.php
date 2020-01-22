@@ -51,7 +51,7 @@ if(isset($_POST['send'])) {
     <title>Register</title>
 </head>
 <body class="bg-light">
-<h1 style="text-align: center; font-family: 'Kaushan Script', cursive; margin-top: 30px">Online Store</h1>
+<a href="../index.php" style="text-decoration: none; color: black"><h1 style="text-align: center; font-family: 'Kaushan Script', cursive; margin-top: 30px">Online Store</h1></a>
     <div class="row justify-content-center" style="margin-top: 30px">
     <div class="registerForm" id="registerForm">
         <form action="register.view.php" method="POST">

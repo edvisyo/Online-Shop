@@ -13,7 +13,7 @@ class Database {
         $this->dbhost = "localhost";
         $this->dbuser = "root";
         $this->dbpass = "";
-        $this->dbname = "onlineshopoop";
+        $this->dbname = "onlineshoppdo";
         $this->charset = "UTF8";
 
 
